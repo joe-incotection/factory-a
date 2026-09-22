@@ -1,0 +1,9 @@
+version: "1.0"
+module: "vapd"
+law:
+  reason_codes_file: "REASON_CODES_VAPD_v1.yaml"
+  canonical_json:
+    sort_keys: true
+    float_round: 6
+  determinism_key_includes: ["config.yaml", "toolchain_manifest_if_present"]
+  human_run_only: true

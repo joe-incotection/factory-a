@@ -1,0 +1,23 @@
+module_id: compute_runner
+schema_version: '1.3'
+allowlist:
+- RC_CR_ADAPTER_BARS_CONVERTED
+- RC_CR_ADAPTER_SIGNATURE_MAPPED
+- RC_CR_COLLECT_OK
+- RC_CR_M1_OK
+- RC_CR_SUCCESS
+- RC_CR_ERROR
+- RC_CR_PULSE_OK
+- RC_CR_PULSE_SKIPPED
+- RC_CR_EA3_OK
+- RC_CR_EA3_SKIPPED
+- RC_CR_OMNI_INSUFFICIENT_BARS
+- RC_CR_OMNI_INPUT_MISSING
+notes:
+- 'SSOT: Runtime artifact Phase 0'
+- Only these reason codes are permitted to appear in compute_runner outputs (reason_codes
+  list).
+- RC_CR_EA3_OK    -- EA3 combat brain ran (ea3_enabled=True)
+- RC_CR_EA3_SKIPPED -- EA3 pass-through (ea3_enabled=False)
+- RC_CR_OMNI_INSUFFICIENT_BARS -- bars < 20, OmniGraph skipped (fail-closed pre-validation)
+- RC_CR_OMNI_INPUT_MISSING -- GBPUSD bars not provided, OmniGraph skipped

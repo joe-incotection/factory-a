@@ -1,0 +1,19 @@
+version: "1.0"
+ssot: true
+
+invariants:
+  - id: M8_INV_TEST
+    rule: "exists(graph_valid)"
+
+
+
+
+
+
+
+
+
+
+
+
+

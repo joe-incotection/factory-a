@@ -1,0 +1,58 @@
+# kami_complete_pythonbrain2026_trinity_m1_bridge.yaml
+# KAMI (style+governance) bridge for TRINITY_M1 — scoped for this module only.
+# v2.0.1 (bridge) — keep consistent with your validator bridge naming.
+
+bridge_version: "2.0.1"
+module: "TRINITY_M1"
+scope:
+  applies_to:
+    - "code/trinity_m1/**"
+    - "tests/trinity_m1/**"
+  excludes:
+    - "factory_a/**"
+    - "pal_kernel/**"
+
+laws:
+  schema_as_law: true
+  no_free_text_reason: true
+  determinism_required: true
+
+determinism:
+  canonical_json:
+    sort_keys: true
+    float_precision_decimals: 6
+    allow_nan: false
+  hashing:
+    algo: "sha256"
+  time:
+    forbid_wall_clock_in_core_logic: true
+    allowed: ["timestamp_utc passed via input bars/meta"]
+
+python_style:
+  typing: "required"
+  docstrings: "google"
+  exceptions:
+    custom_exceptions_module: "exceptions.py"
+  logging:
+    # Evidence logging is DATA (output_contract.evidence_log); runtime logs are optional.
+    no_print_in_library: true
+
+tests_policy:
+  golden_tests_required: true
+  target: "tests/trinity_m1/test_golden_trinity_m1.py"
+  must_pass: "7/7"
+  forbid_network: true
+  forbid_fs_outside_tmp: true
+
+artifacts:
+  required_outputs:
+    - "evidence.json (AIEL-T output)"
+    - "TRINITY_M1 receipt.json (Gate C output)"
+  storage_hint:
+    evidence_folder: "factory_a/aiel_t/evidence/"
+    receipts_folder: "outputs/receipts/"
+
+references:
+  module_spec: "TRINITY_MODULE_1_SPEC.yaml.txt"
+  golden_io: "GOLDEN_IO_LOCK_TRINITY_M1.yaml"
+  reason_codes: "TRINITY_M1_REASON_CODES.yaml"

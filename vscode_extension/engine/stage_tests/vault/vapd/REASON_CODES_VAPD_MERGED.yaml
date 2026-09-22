@@ -1,0 +1,23 @@
+version: "1.0"
+module: "VAPD"
+description: "Volatility Analysis & Pattern Detection - Signal reason codes (Core + Survival)"
+
+allowlist:
+  # ========================================
+  # Core VAPD Codes
+  # ========================================
+  - VAPD_SIGNAL_WEAK
+  - VAPD_VOLATILITY_TOO_HIGH
+  
+  # ========================================
+  # Survival Codes (Regime Detection)
+  # ========================================
+  - VAPD_VOLATILITY_SPIKE
+  - VAPD_ANOMALY_DETECTED
+  - VAPD_REGIME_FLIP
+  - VAPD_EVIDENCE_INCOMPLETE
+
+notes:
+  free_text_forbidden: true
+  enforcement: "All codes must be from this allowlist only"
+  survival_law: "S3 - Drift Alarm Law (regime change detection)"

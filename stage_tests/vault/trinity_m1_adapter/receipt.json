@@ -1,0 +1,9 @@
+{
+  "module_id": "trinity_m1_adapter",
+  "receipt_id": "RECEIPT_trinity_m1_adapter_20260316_184749",
+  "status": "PASS",
+  "evidence_ref": "trinity_m1_adapter_test_evidence.json",
+  "timestamp": "2026-03-16T11:47:49.718101Z",
+  "gate_c_version": "1.0",
+  "validator": "integrate_single_m.py (PROPER FLOW)"
+}

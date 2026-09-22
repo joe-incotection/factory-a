@@ -1,0 +1,58 @@
+{
+  "name": "factory-a",
+  "displayName": "Factory-A — Verified AI Coding",
+  "description": "AI coding that doesn't fall apart at scale. Every change is verified, not trusted: it must pass a deterministic gate (tests + replay + no hallucinated names) before it ships — with a tamper-evident receipt.",
+  "version": "0.6.2",
+  "publisher": "i1980200888",
+  "icon": "icon.png",
+  "engines": { "vscode": "^1.85.0" },
+  "categories": ["Linters", "Testing", "Other"],
+  "keywords": ["ai", "verification", "code quality", "hallucination", "gate", "reliability"],
+  "activationEvents": [],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "factory-a.verify",
+        "title": "Factory-A: Verify Folder (full gate)",
+        "category": "Factory-A"
+      },
+      {
+        "command": "factory-a.checkHallucination",
+        "title": "Factory-A: Check for Hallucinated Names (fast)",
+        "category": "Factory-A"
+      },
+      {
+        "command": "factory-a.setupMaster",
+        "title": "Factory-A: Add Master Guide to Folder (start here)",
+        "category": "Factory-A"
+      },
+      {
+        "command": "factory-a.showMcpSetup",
+        "title": "Factory-A: Show MCP Server Setup (any AI client)",
+        "category": "Factory-A"
+      }
+    ],
+    "configuration": {
+      "title": "Factory-A",
+      "properties": {
+        "factory-a.home": {
+          "type": "string",
+          "default": "",
+          "description": "Path to the factory_a_pkg folder (the engine). If empty, uses the FACTORY_A_HOME environment variable."
+        },
+        "factory-a.pythonPath": {
+          "type": "string",
+          "default": "python",
+          "description": "Python executable used to run the gate."
+        },
+        "factory-a.profile": {
+          "type": "string",
+          "enum": ["general", "strict"],
+          "default": "general",
+          "description": "Verification strictness profile. 'strict' = pure-logic (no network/time/random)."
+        }
+      }
+    }
+  }
+}

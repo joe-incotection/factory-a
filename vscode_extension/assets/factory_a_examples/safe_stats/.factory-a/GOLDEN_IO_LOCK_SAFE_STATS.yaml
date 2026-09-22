@@ -1,0 +1,59 @@
+# GOLDEN_IO_LOCK_SAFE_STATS.yaml
+# Golden I/O Contract for SAFE_STATS (numeric series -> deterministic summary)
+# v1.0 — LOCKED (schema-as-law)
+
+module:
+  name: "SAFE_STATS"
+  golden_io_version: "1.0"
+
+canonicalization:
+  json:
+    sort_keys: true
+    float_precision_decimals: 6
+    allow_nan: false
+  arrays:
+    preserve_order: true
+
+input_contract:
+  required:
+    - values
+    - meta
+  fields:
+    values:
+      type: array
+      min_items: 1
+      items: {type: number}
+    meta:
+      type: object
+      required: [run_id]
+      fields:
+        run_id: {type: string}
+
+output_contract:
+  required:
+    - summary
+    - metadata
+  fields:
+    summary:
+      type: object
+      required: [count, sum, mean, min, max]
+      fields:
+        count: {type: integer, min: 1}
+        sum: {type: number}
+        mean: {type: number}
+        min: {type: number}
+        max: {type: number}
+    metadata:
+      type: object
+      required: [audit_quality]
+      fields:
+        audit_quality: {type: string, enum: ["NORMAL"]}
+
+failure_behavior:
+  hard_fail:
+    must_log_error: true
+  soft_degrade:
+    emit: false
+
+reason_codes:
+  allowlist_file: "SAFE_STATS_REASON_CODES.yaml"

@@ -1,0 +1,18 @@
+version: v1.0
+schema_id: CANONICAL_ENVELOPE
+envelope:
+  required_sections: [meta, payload, reason_codes]
+  sections:
+    meta:
+      type: object
+      required_keys: [envelope_version, message_id, determinism_key, producer_module, produced_at_utc]
+    payload:
+      type: object
+      allowed_subsections: [context, evidence, features, decision, risk_state, stamps, extensions]
+    reason_codes:
+      type: array
+      item_type: string
+compatibility:
+  rule:
+    - "Backward compatible: add optional fields only"
+    - "Breaking: remove/rename/change semantics => bump major + migration"

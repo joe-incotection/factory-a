@@ -1,0 +1,9 @@
+{
+  "module_id": "compute_runner",
+  "receipt_id": "RECEIPT_compute_runner_20260317_132936",
+  "status": "PASS",
+  "evidence_ref": "compute_runner_test_evidence.json",
+  "timestamp": "2026-03-17T06:29:36.086362Z",
+  "gate_c_version": "1.0",
+  "validator": "integrate_single_m.py (PROPER FLOW)"
+}

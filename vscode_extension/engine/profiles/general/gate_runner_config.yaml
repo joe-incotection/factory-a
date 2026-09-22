@@ -1,0 +1,4 @@
+# Factory-A gate config — profile: general
+m8_invariants_file: m8_invariants.yaml
+test_timeout: 60
+enable_m7_replay: true

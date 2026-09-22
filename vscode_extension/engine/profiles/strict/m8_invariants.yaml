@@ -1,0 +1,8 @@
+version: "1.0"
+ssot: true
+# Generic structural invariant (language/domain-neutral). M8 validates the
+# module graph, not code semantics — semantic rules live in each module's
+# INVARIANTS_*.yaml compiled into golden tests.
+invariants:
+  - id: M8_INV_GRAPH_VALID
+    rule: "exists(graph_valid)"

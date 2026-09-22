@@ -1,0 +1,105 @@
+C:\Users\Admin\Desktop\joe's\Gate_c_tests>python gate_c_runner.py *.zip --batch --out summary.csv
+
+============================================================
+Gate C Runner - Production
+============================================================
+Module: BrainRouter_Golden.zip
+Timestamp: 2026-01-25T16:31:59.193999+00:00
+
+[Stage 1/6] Extracting module...
+  ✅ Extracted to: \tmp\gate_c_runner\BrainRouter_Golden
+[Stage 2/6] Validating structure...
+  ✅ Structure valid: backend/ config/
+[Stage 3/6] Running module...
+  Found modules in: backend\router
+  Module file: brain_router.py
+  Main class: BrainRouter
+  Module requires arguments: ['gim_result', 'vapd_result', 'eql_result']
+  ✅ Module executed successfully
+[Stage 4/6] Building decision receipt...
+[Stage 5/6] Validating with Gate C...
+  ✅ Gate C validation: PASS
+[Stage 6/6] Replay + Write-once...
+  [6.1] Replay determinism check...
+    ✅ Replay: receipt_hash identical
+    ✅ Replay: determinism_key identical
+  [6.2] Write-once receipt persistence...
+    ✅ Receipt written: receipts/dec_f2d5715f2d86.json
+    ✅ Write-once enforced
+
+============================================================
+✅ Gate C Validation: PASS
+============================================================
+
+📄 Report saved: \tmp\gate_c_runner\gate_c_report_20260125_233159.json
+
+============================================================
+Gate C Runner - Production
+============================================================
+Module: GIM_Golden.zip
+Timestamp: 2026-01-25T16:31:59.764473+00:00
+
+[Stage 1/6] Extracting module...
+  ✅ Extracted to: \tmp\gate_c_runner\GIM_Golden
+[Stage 2/6] Validating structure...
+  ✅ Structure valid: backend/ config/
+[Stage 3/6] Running module...
+  Found modules in: backend\modules
+  Module file: global_infrastructure_monitor.py
+  Main class: GlobalInfrastructureMonitor
+  ✅ Module executed successfully
+[Stage 4/6] Building decision receipt...
+[Stage 5/6] Validating with Gate C...
+  ✅ Gate C validation: PASS
+[Stage 6/6] Replay + Write-once...
+  [6.1] Replay determinism check...
+    ✅ Replay: receipt_hash identical
+    ✅ Replay: determinism_key identical
+  [6.2] Write-once receipt persistence...
+    ✅ Receipt written: receipts/dec_677b9e1ca3cf.json
+    ✅ Write-once enforced
+
+============================================================
+✅ Gate C Validation: PASS
+============================================================
+
+📄 Report saved: \tmp\gate_c_runner\gate_c_report_20260125_233159.json
+
+============================================================
+Gate C Runner - Production
+============================================================
+Module: VAPD_Golden.zip
+Timestamp: 2026-01-25T16:31:59.873218+00:00
+
+[Stage 1/6] Extracting module...
+  ✅ Extracted to: \tmp\gate_c_runner\VAPD_Golden
+[Stage 2/6] Validating structure...
+  ✅ Structure valid: backend/ config/
+[Stage 3/6] Running module...
+  Found modules in: backend\modules
+  Module file: volatility_adjusted_price_deviation.py
+  Main class: VolatilityAdjustedPriceDeviation
+  Module requires arguments: ['gim_result']
+  ✅ Module executed successfully
+[Stage 4/6] Building decision receipt...
+[Stage 5/6] Validating with Gate C...
+  ✅ Gate C validation: PASS
+[Stage 6/6] Replay + Write-once...
+  [6.1] Replay determinism check...
+    ✅ Replay: receipt_hash identical
+    ✅ Replay: determinism_key identical
+  [6.2] Write-once receipt persistence...
+    ✅ Receipt written: receipts/dec_3cbd46a401b6.json
+    ✅ Write-once enforced
+
+============================================================
+✅ Gate C Validation: PASS
+============================================================
+
+📄 Report saved: \tmp\gate_c_runner\gate_c_report_20260125_233159.json
+
+============================================================
+📊 Batch Summary
+============================================================
+Total: 3 | PASS: 3 | FAIL: 0
+Summary CSV: summary.csv

@@ -1,0 +1,155 @@
+# ============================================================
+# REASON_CODES_v1.yaml  (LOCKED SSOT)
+# Unified Reason Code Law for:
+# - Gate C (Decision Receipt Builder)
+# - M8_v2 (Determinism + Receipt Validation)
+# - Stage2 Validator (Authority Modules M1-M6)
+# - M7 Replay Verifier (Runtime Replay + Drift Judge)
+#
+# Rule:
+# - NO free-text reasons allowed
+# - Every failure MUST map to one of these codes
+# - Codes are immutable after LOCK
+# ============================================================
+
+version: "1.0"
+status: "LOCKED"
+scope:
+  - gate_c_decision_receipt
+  - m8_replay_gate
+  - stage2_authority_validator
+  - m7_runtime_replay
+
+# ------------------------------------------------------------
+# CATEGORY A — Evidence / Trinity Integrity
+# ------------------------------------------------------------
+EVIDENCE:
+  RC_NOISE_RESIDUAL_MISSING:
+    severity: HARD_FAIL_BLOCK
+    description: "Trinity noise_residual evidence missing/null/empty."
+
+  RC_WINDOW_MISMATCH:
+    severity: HARD_FAIL_BLOCK
+    description: "Evidence window length mismatch vs declared window_size."
+
+  RC_SEGMENT_HASH_MISSING:
+    severity: HARD_FAIL_BLOCK
+    description: "segment_hash not produced or not persisted."
+
+  RC_TRUTH_CONTAMINATION_DETECTED:
+    severity: HARD_FAIL_BLOCK
+    description: "Truth fields leaked into cleaned/noise evidence (forbidden)."
+
+
+# ------------------------------------------------------------
+# CATEGORY B — Gate C Decision Receipt Violations
+# ------------------------------------------------------------
+GATE_C:
+  RC_RECEIPT_SCHEMA_INVALID:
+    severity: HARD_FAIL_BLOCK
+    description: "Decision Receipt JSON does not match locked schema."
+
+  RC_RECEIPT_REASON_CODE_UNKNOWN:
+    severity: HARD_FAIL_BLOCK
+    description: "Receipt contains reason_code not in allowlist."
+
+  RC_RECEIPT_MISSING_FIELDS:
+    severity: HARD_FAIL_BLOCK
+    description: "Receipt missing mandatory fields (decision_id/context_hash/etc)."
+
+  RC_RECEIPT_NOT_WRITTEN_PRE_EXECUTION:
+    severity: HARD_FAIL_BLOCK
+    description: "Receipt was not persisted BEFORE execution."
+
+  RC_PARAMETERS_HASH_MISSING:
+    severity: HARD_FAIL_BLOCK
+    description: "parameters_hash absent (cannot audit config invariants)."
+
+  RC_EVIDENCE_SET_HASH_MISSING:
+    severity: HARD_FAIL_BLOCK
+    description: "evidence_set_hash absent (cannot bind decision to evidence)."
+
+
+# ------------------------------------------------------------
+# CATEGORY C — Determinism + Replay Gate (M8)
+# ------------------------------------------------------------
+M8_DETERMINISM:
+  RC_DETERMINISM_KEY_MISSING:
+    severity: HARD_FAIL_BLOCK
+    description: "determinism_key absent or empty."
+
+  RC_DETERMINISM_KEY_NON_REPRODUCIBLE:
+    severity: HARD_FAIL_BLOCK
+    description: "Same inputs produced different determinism_key."
+
+  RC_CANONICAL_PAYLOAD_NOT_LOCKED:
+    severity: HARD_FAIL_BLOCK
+    description: "Canonical payload rules not respected (float/NaN/order drift)."
+
+  RC_REPLAY_HASH_MISMATCH:
+    severity: HARD_FAIL_BLOCK
+    description: "rehash(canonical_payload) != stored segment_hash."
+
+
+# ------------------------------------------------------------
+# CATEGORY D — Stage2 Authority Failures (M1–M6)
+# ------------------------------------------------------------
+STAGE2_AUTHORITY:
+  RC_POLICY_SCOPE_VIOLATION:
+    severity: HARD_FAIL_BLOCK
+    description: "Module exceeded allowed authority scope."
+
+  RC_INVALID_VERDICT_CLAMP:
+    severity: HARD_FAIL_BLOCK
+    description: "Final verdict exceeded context cap (L3 clamp breach)."
+
+  RC_MODULE_OUTPUT_CONTRACT_BROKEN:
+    severity: HARD_FAIL_BLOCK
+    description: "Golden Output Contract violated."
+
+  RC_REASON_ENUM_VIOLATION:
+    severity: HARD_FAIL_BLOCK
+    description: "Validator produced reason not in enum allowlist."
+
+
+# ------------------------------------------------------------
+# CATEGORY E — Runtime Replay + Drift Judge (M7)
+# ------------------------------------------------------------
+M7_REPLAY:
+  RC_RUNTIME_ENV_DRIFT:
+    severity: HARD_FAIL_BLOCK
+    description: "Runtime environment changed across replay runs."
+
+  RC_SYSCALL_VIOLATION:
+    severity: HARD_FAIL_BLOCK
+    description: "Forbidden syscall/network/file access detected."
+
+  RC_REPLAY_OUTPUT_DIVERGENCE:
+    severity: HARD_FAIL_BLOCK
+    description: "Replay produced different outputs vs baseline."
+
+  RC_POLICY_DRIFT_DETECTED:
+    severity: HARD_FAIL_BLOCK
+    description: "Decision behavior drifted outside locked policy envelope."
+
+
+# ------------------------------------------------------------
+# CATEGORY F — Safe Mode / Degraded (Non-blocking)
+# ------------------------------------------------------------
+SAFE_MODE:
+  RC_EVIDENCE_INCOMPLETE_SAFE_MODE:
+    severity: SOFT_FAIL_DEGRADE
+    description: "Evidence incomplete → force SAFE_MODE (no execution)."
+
+  RC_SCENARIO_MATCH_LOW_CONFIDENCE:
+    severity: SOFT_FAIL_DEGRADE
+    description: "Scenario router match_score below threshold."
+
+  RC_FALSIFIER_VETO_TRIGGERED:
+    severity: SOFT_FAIL_DEGRADE
+    description: "Falsifier veto activated → reduce risk / hold."
+
+
+# ============================================================
+# END OF LOCKED ENUM
+# ============================================================

@@ -1,0 +1,27 @@
+version: '1.0'
+module: SAFE_STATS
+invariants:
+- id: INV_INPUT_VALUES_MIN_1
+  rule: len(input.values) >= 1
+  severity: HARD_FAIL
+- id: INV_OUTPUT_REQUIRED_KEYS
+  rule: output has all required top-level keys per GOLDEN_IO_LOCK_SAFE_STATS.yaml
+  severity: HARD_FAIL
+- id: INV_COUNT_MATCHES_INPUT
+  rule: output.summary.count == len(input.values)
+  severity: HARD_FAIL
+- id: INV_MEAN_WITHIN_BOUNDS
+  rule: output.summary.min <= output.summary.mean <= output.summary.max
+  severity: HARD_FAIL
+- id: INV_NO_NAN_INF
+  rule: no NaN or Infinity anywhere in input.values or output.summary
+  severity: HARD_FAIL
+- id: INV_CANONICAL_JSON
+  rule: canonical_json uses sort_keys=true, float_precision=6, allow_nan=false
+  severity: HARD_FAIL
+- id: INV_NO_WALL_CLOCK
+  rule: core logic must not read wall clock or any machine state
+  severity: HARD_FAIL
+references:
+  golden_io_lock: GOLDEN_IO_LOCK_SAFE_STATS.yaml
+  reason_codes: SAFE_STATS_REASON_CODES.yaml

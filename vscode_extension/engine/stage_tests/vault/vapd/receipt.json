@@ -1,0 +1,9 @@
+{
+  "module_id": "vapd",
+  "receipt_id": "RECEIPT_vapd_20260316_193017",
+  "status": "PASS",
+  "evidence_ref": "vapd_test_evidence.json",
+  "timestamp": "2026-03-16T12:30:17.698776Z",
+  "gate_c_version": "1.0",
+  "validator": "integrate_single_m.py (PROPER FLOW)"
+}

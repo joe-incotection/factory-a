@@ -1,0 +1,9 @@
+{
+  "module_id": "spider_m",
+  "receipt_id": "RECEIPT_spider_m_20260327_123653",
+  "status": "PASS",
+  "evidence_ref": "spider_m_test_evidence.json",
+  "timestamp": "2026-03-27T05:36:53.942961Z",
+  "gate_c_version": "1.0",
+  "validator": "integrate_single_m.py (PROPER FLOW)"
+}

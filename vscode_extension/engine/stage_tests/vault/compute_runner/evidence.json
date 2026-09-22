@@ -1,0 +1,11 @@
+{
+  "module_id": "compute_runner",
+  "test_result": "PASS",
+  "tests_passed": 25,
+  "tests_total": 25,
+  "tests_failed": 0,
+  "tests_skipped": 0,
+  "timestamp": "2026-03-17T06:29:36.085371Z",
+  "source": "AIEL-T (real pytest execution)",
+  "evidence_type": "SINGLE_MODULE_TEST"
+}

@@ -1,0 +1,28 @@
+# Factory-A Project Manifest (SSOT)
+# -----------------------------------------------
+# Single source of truth for the module list used
+# by integrate_multi_m.py.
+# -----------------------------------------------
+modules:
+  - trinity_m1
+  - trinity_m2
+  - eql
+  - vapd
+  - gim
+  - trinity_m1_adapter
+  - feature_normalizer
+  - evidence_bundle_builder
+  - vip_policy_gate
+  - brain_router
+  - guard
+  - truth_feed_manager
+  - data_collector  
+  - mt5_executor
+  - mt5_position_manager
+  - omnigraph_hybrid_v2
+  - ea3
+  - compute_runner
+  - ws1_the_pulse
+  - live_enablement
+  - live_runner_continuous
+  - e2

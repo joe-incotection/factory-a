@@ -1,0 +1,11 @@
+{
+  "module_id": "MT5Executor",
+  "test_result": "PASS",
+  "tests_passed": 7,
+  "tests_total": 7,
+  "tests_failed": 0,
+  "tests_skipped": 0,
+  "timestamp": "2026-02-15T12:08:18.800928Z",
+  "source": "AIEL-T (real pytest execution)",
+  "evidence_type": "SINGLE_MODULE_TEST"
+}

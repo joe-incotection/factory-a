@@ -1,0 +1,13 @@
+# Module 3 - sandbox_runner
+# Version: 1.0.0
+# Python: 3.11+
+
+# Testing
+pytest>=7.4.0
+pytest-timeout>=2.1.0
+
+# Linting (for sandbox commands)
+ruff>=0.1.0
+
+# No external dependencies for runtime
+# (uses only Python stdlib: subprocess, hashlib)

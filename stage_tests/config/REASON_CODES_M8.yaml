@@ -1,0 +1,54 @@
+version: "1.0"
+purpose: "Reason code allowlist for M8_v2 (no free-text)."
+rules:
+  - "All reasons MUST use codes from this file only."
+  - "critical_fail_set MUST be subset of codes."
+  - "Any unknown code => SYS_SCHEMA_VIOLATION (hard fail)."
+
+codes:
+  # System / schema / determinism (baseline)
+  - code: SYS_SCHEMA_VIOLATION
+    severity: CRITICAL
+    lane: SYSTEM
+  - code: SYS_NONDETERMINISTIC_DETECTED
+    severity: CRITICAL
+    lane: DETERMINISM
+
+  # M8 failure taxonomy (minimal & locked)
+  - code: M8_SCHEMA_FAIL
+    severity: CRITICAL
+    lane: M8
+  - code: M8_GRAPH_INCOMPLETE
+    severity: CRITICAL
+    lane: M8
+  - code: M8_INVARIANT_FAIL
+    severity: CRITICAL
+    lane: M8
+  - code: M8_CANONICAL_FAIL
+    severity: CRITICAL
+    lane: M8
+  - code: M8_REPLAY_FAIL
+    severity: CRITICAL
+    lane: M8
+  - code: M8_ARTIFACT_REF_INVALID
+    severity: CRITICAL
+    lane: M8
+  - code: M8_DETERMINISM_KEY_MISSING
+    severity: CRITICAL
+    lane: M8
+
+  # PASS (M8 is block-only; PASS has a code too)
+  - code: M8_PASS
+    severity: LOW
+    lane: M8
+
+critical_fail_set:
+  - SYS_SCHEMA_VIOLATION
+  - SYS_NONDETERMINISTIC_DETECTED
+  - M8_SCHEMA_FAIL
+  - M8_GRAPH_INCOMPLETE
+  - M8_INVARIANT_FAIL
+  - M8_CANONICAL_FAIL
+  - M8_REPLAY_FAIL
+  - M8_ARTIFACT_REF_INVALID
+  - M8_DETERMINISM_KEY_MISSING

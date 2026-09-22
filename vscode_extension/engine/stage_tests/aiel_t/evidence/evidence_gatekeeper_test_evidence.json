@@ -1,0 +1,11 @@
+{
+  "module_id": "evidence_gatekeeper",
+  "test_result": "PASS",
+  "tests_passed": 9,
+  "tests_total": 9,
+  "tests_failed": 0,
+  "tests_skipped": 0,
+  "timestamp": "2026-02-27T04:26:07.675570Z",
+  "source": "AIEL-T (real pytest execution)",
+  "evidence_type": "SINGLE_MODULE_TEST"
+}

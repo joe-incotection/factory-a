@@ -1,0 +1,50 @@
+# REASON_CODES — spider_m / live_quad_gear
+# Version: 1.0
+
+reason_codes:
+  # Tier decision codes
+  TIER_SKIP:
+    description: "Tension below skip threshold — no trade"
+    severity: INFO
+
+  TIER_FLAT:
+    description: "Tension in FLAT band — base lot trade"
+    severity: INFO
+
+  TIER_BOOST:
+    description: "Tension above boost threshold — scaled lot trade"
+    severity: INFO
+
+  # Validation errors
+  E_MISSING_PAYLOAD_KEY:
+    description: "Required key absent from spider_m payload"
+    severity: ERROR
+
+  E_Z_SCORES_LENGTH:
+    description: "z_scores must contain exactly 3 values"
+    severity: ERROR
+
+  E_IMP_PRICES_LENGTH:
+    description: "imp_prices must contain exactly 3 values"
+    severity: ERROR
+
+  E_HIGH_LOW_MISMATCH:
+    description: "high_arr and low_arr must be same length"
+    severity: ERROR
+
+  E_BOOST_BELOW_SKIP:
+    description: "tension_boost must be strictly greater than tension_skip"
+    severity: ERROR
+
+  # Live runner codes
+  E_NO_BARS:
+    description: "MT5 returned no bars for symbol/timeframe"
+    severity: WARNING
+
+  E_KALMAN_FAIL:
+    description: "trinity_m1 Kalman filter failed for symbol"
+    severity: WARNING
+
+  E_NO_TICK:
+    description: "MT5 symbol_info_tick returned None"
+    severity: WARNING

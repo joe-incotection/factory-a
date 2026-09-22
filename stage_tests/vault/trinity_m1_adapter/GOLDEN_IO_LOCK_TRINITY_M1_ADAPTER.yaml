@@ -1,0 +1,128 @@
+# GOLDEN_IO_LOCK_TRINITY_M1_ADAPTER.yaml
+module:
+  name: "TRINITY_M1_ADAPTER"
+  golden_io_version: "1.0"
+
+canonicalization:
+  json:
+    sort_keys: true
+    float_precision_decimals: 6
+    allow_nan: false
+  arrays:
+    preserve_order: true
+
+input_contract:
+  required:
+    - cleaned_structure_signal
+    - noise_residual
+    - spectral_signature
+    - broker_audit
+    - metadata
+  fields:
+    cleaned_structure_signal:
+      type: object
+    noise_residual:
+      type: object
+    spectral_signature:
+      type: object
+    broker_audit:
+      type: object
+      required:
+        - trust_score
+        - trust_state
+        - evidence_log
+      fields:
+        trust_score: {type: number, min: 0, max: 1}
+        trust_state: {type: string}
+        evidence_log:
+          type: array
+          min_items: 1
+          items:
+            type: object
+            required:
+              - timestamp_utc
+              - pattern_name
+              - confidence_0_1
+              - evidence_strength
+              - raw_refs
+            fields:
+              timestamp_utc: {type: string}
+              pattern_name: {type: string}
+              confidence_0_1: {type: number, min: 0, max: 1}
+              evidence_strength: {type: number, min: 0, max: 1}
+              raw_refs:
+                type: object
+                required: [segment_hash, residual_indices]
+                fields:
+                  segment_hash: {type: string}
+                  residual_indices: {type: array, items: {type: integer}}
+    metadata:
+      type: object
+
+output_contract:
+  required:
+    - adapter_version
+    - source_module
+    - mapping_status
+    - noise_residual
+    - trust_score
+    - detected_patterns
+    - mapped_context
+    - candidate_features
+    - evidence_refs
+    - missing_fields
+    - reason_codes
+  fields:
+    adapter_version: {type: string, enum: ["v1.0"]}
+    source_module: {type: string, enum: ["trinity_m1"]}
+    mapping_status: {type: string, enum: ["OK", "PARTIAL", "BLOCKED"]}
+    noise_residual: {type: array}
+    trust_score: {type: number, min: 0, max: 1}
+    detected_patterns: {type: array, items: {type: string}}
+    mapped_context:
+      type: object
+      required:
+        - trinity_signal
+        - noise_residual
+        - broker_audit
+      fields:
+        trinity_signal: {type: string}
+        noise_residual: {type: object}
+        broker_audit: {type: object}
+    candidate_features:
+      type: object
+      required:
+        - oil_price
+        - yield_10y
+        - fx_correlation
+      fields:
+        oil_price: {type: [number, "null"]}
+        yield_10y: {type: [number, "null"]}
+        fx_correlation: {type: [number, "null"]}
+    evidence_refs:
+      type: array
+      items:
+        type: object
+        required: [eid, source, data_hash]
+        fields:
+          eid: {type: string}
+          source: {type: string}
+          data_hash: {type: string}
+    missing_fields:
+      type: array
+      items: {type: string}
+    reason_codes:
+      type: array
+      items: {type: string}
+
+failure_behavior:
+  hard_fail:
+    raise: "TrinityM1AdapterError"
+    conditions:
+      - required input field missing
+      - invalid input shape
+      - required mapped field missing
+      - allowlist reason code violation
+  partial:
+    allowed_when:
+      - only optional candidate feature fields are missing

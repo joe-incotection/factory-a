@@ -1,0 +1,9 @@
+version: v1.0
+schema_id: INVARIANTS_MASTER
+invariants:
+  - {id: INV_DETERMINISM, severity: HARD_FAIL, text: "No randomness/wall-clock/network/env inspection"}
+  - {id: INV_SCHEMA_AS_LAW, severity: HARD_FAIL, text: "No extra keys beyond GOLDEN_IO_LOCK"}
+  - {id: INV_CANONICAL_FIELDS_ONLY, severity: HARD_FAIL, text: "All GOLDEN_IO_LOCK fields must exist in CANONICAL_FIELDS_CORE or declared extension"}
+  - {id: INV_REASON_CODES_ALLOWLIST, severity: HARD_FAIL, text: "Reason codes must be subsets of REASON_CODES_MASTER"}
+  - {id: INV_NO_AUTHORITY_OVERLAP, severity: HARD_FAIL, text: "No authority overlap across modules"}
+  - {id: INV_NO_SILENT_PASS, severity: HARD_FAIL, text: "No PASS without required evidence"}

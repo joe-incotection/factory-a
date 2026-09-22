@@ -1,0 +1,67 @@
+meta:
+  name: "AIEL-T Framework Config"
+  version: "1.0.0"
+  domain: "generic"
+  description: >
+    Sample configuration for AIEL-T test generation & execution.
+    Modify this file to match your project structure.
+
+spec_sources:
+  # Path to your main specification file
+  master_spec: "specs/Master_Spec.md"
+  
+  # Path to invariants definition file
+  invariants_file: "specs/Invariants.yaml"
+  
+  # Additional spec files (YAML or MD)
+  additional_specs:
+    - "specs/Component_A_Spec.yaml"
+    - "specs/Component_B_Spec.md"
+
+targets:
+  # List your modules/components to test
+   - name: "VAPD_Module"
+     module: "backend.modules.VAPD.volatility_adjusted_price_deviation" 
+     type: "python"
+
+  # - name: "GIM_Module"
+  #  module: "backend.modules.GIM.global_infrastructure_monitor"
+  # - name: "VAPD_Module"
+  #  module: "backend.modules.VAPD.volatility_adjusted_price_deviation" 
+  
+   
+
+test_outputs:
+  # Where to save test results and reports
+  root_dir: "tests/aiel_t/"
+  invariants_tests_dir: "tests/aiel_t/invariants/"
+  pattern_tests_dir: "tests/aiel_t/patterns/"
+  contract_tests_dir: "tests/aiel_t/contracts/"
+  scenario_tests_dir: "tests/aiel_t/scenarios/"
+  reports_dir: "tests/aiel_t/reports/"
+
+scoring:
+  # Weights for each engine (must sum to 1.0)
+  weights:
+    invariants: 0.45
+    patterns: 0.15
+    contracts: 0.10
+    scenarios: 0.30
+  
+  # Thresholds for deployment decision
+  pass_threshold: 0.95      # G-Score >= 0.95 = DEPLOYABLE
+  revision_threshold: 0.80  # G-Score >= 0.80 = REVISION REQUIRED
+
+runner:
+  # Test execution settings
+  language: "python"
+  test_command: "pytest tests/aiel_t -v"
+  report_format: "json"
+  report_filename: "tests/aiel_t/reports/aiel_t_report.json"
+
+# Optional: Custom scenario definitions
+custom_scenarios:
+  - id: "CUSTOM_001"
+    name: "Custom Validation Scenario"
+    description: "Add your own scenario logic here"
+    enabled: false

@@ -1,0 +1,238 @@
+{
+  "timestamp": "2026-03-27T05:36:57.744014Z",
+  "gate_runner_version": "2.0",
+  "final_status": "PASS",
+  "input_file": "C:\\Factory-A\\stage_tests_V2_patch\\vault\\spider_m\\spider_m_SINGLE_bundle.zip",
+  "config": {
+    "test_timeout": 60,
+    "enable_m7_replay": true,
+    "stage2_available": true,
+    "m7_available": true
+  },
+  "m8": {
+    "m8_version": "2.0",
+    "status": "PASS",
+    "failure_reason": null,
+    "determinism_key": "sha256:a880b43d47af7bb532f5625b70a225e1d053f0fa49b6e53065869f7cb0469375",
+    "invariants_passed": 1,
+    "failed_invariants": []
+  },
+  "stage2": {
+    "stage2_version": "1.0",
+    "status": "PASS",
+    "repo_verdict": "PASS",
+    "repo_score": 1.0,
+    "modules_checked": 1,
+    "static_findings": 0,
+    "tests_passed": 15,
+    "tests_total": 15,
+    "context_gate_level": "L3",
+    "full_report": {
+      "submission_id": "spider_m_SINGLE_bundle",
+      "validated_at": "2026-03-27T05:36:56.545243+00:00",
+      "final_verdict": "PASS",
+      "determinism_key": "466b63850249eec222ae984db6a8fdf6594c0219a6ef8d67dddb7563bcd37dd7",
+      "toolchain_manifest": {
+        "python_version": "3.11.9",
+        "dependencies": {
+          "altair": "6.0.0",
+          "annotated-types": "0.7.0",
+          "anthropic": "0.84.0",
+          "anyio": "4.12.1",
+          "attrs": "25.4.0",
+          "blinker": "1.9.0",
+          "cachetools": "6.2.6",
+          "certifi": "2026.1.4",
+          "cffi": "2.0.0",
+          "charset-normalizer": "3.4.4",
+          "click": "8.3.1",
+          "colorama": "0.4.6",
+          "cryptography": "46.0.5",
+          "defusedxml": "0.7.1",
+          "distro": "1.9.0",
+          "docstring_parser": "0.17.0",
+          "fastapi": "0.115.0",
+          "Flask": "3.1.3",
+          "gitdb": "4.0.12",
+          "GitPython": "3.1.46",
+          "google-ai-generativelanguage": "0.6.15",
+          "google-api-core": "2.30.0",
+          "google-api-python-client": "2.190.0",
+          "google-auth": "2.49.0.dev0",
+          "google-auth-httplib2": "0.3.0",
+          "google-generativeai": "0.8.6",
+          "googleapis-common-protos": "1.72.0",
+          "grpcio": "1.78.0",
+          "grpcio-status": "1.71.2",
+          "h11": "0.16.0",
+          "httpcore": "1.0.9",
+          "httplib2": "0.31.2",
+          "httptools": "0.7.1",
+          "httpx": "0.28.1",
+          "idna": "3.11",
+          "iniconfig": "2.3.0",
+          "itsdangerous": "2.2.0",
+          "Jinja2": "3.1.6",
+          "jiter": "0.13.0",
+          "jsonschema": "4.26.0",
+          "jsonschema-specifications": "2025.9.1",
+          "MarkupSafe": "3.0.3",
+          "metatrader5": "5.0.5572",
+          "narwhals": "2.17.0",
+          "numpy": "2.4.1",
+          "packaging": "25.0",
+          "pandas": "2.3.3",
+          "pillow": "12.1.1",
+          "plotly": "6.6.0",
+          "pluggy": "1.6.0",
+          "proto-plus": "1.27.1",
+          "protobuf": "5.29.6",
+          "psutil": "7.2.2",
+          "pyarrow": "23.0.1",
+          "pyasn1": "0.6.2",
+          "pyasn1_modules": "0.4.2",
+          "pycparser": "3.0",
+          "pydantic": "2.12.5",
+          "pydantic_core": "2.41.5",
+          "pydeck": "0.9.1",
+          "Pygments": "2.19.2",
+          "pyparsing": "3.3.2",
+          "pytest": "9.0.2",
+          "python-dateutil": "2.9.0.post0",
+          "python-dotenv": "1.2.2",
+          "pytz": "2025.2",
+          "PyYAML": "6.0.3",
+          "pyzmq": "27.1.0",
+          "referencing": "0.37.0",
+          "requests": "2.32.5",
+          "rpds-py": "0.30.0",
+          "six": "1.17.0",
+          "smmap": "5.0.2",
+          "sniffio": "1.3.1",
+          "starlette": "0.38.6",
+          "streamlit": "1.54.0",
+          "tenacity": "9.1.4",
+          "toml": "0.10.2",
+          "tornado": "6.5.4",
+          "tqdm": "4.67.3",
+          "typing-inspection": "0.4.2",
+          "typing_extensions": "4.15.0",
+          "tzdata": "2025.3",
+          "uritemplate": "4.2.0",
+          "urllib3": "2.6.3",
+          "uvicorn": "0.30.6",
+          "watchdog": "6.0.0",
+          "watchfiles": "1.1.1",
+          "websockets": "16.0",
+          "Werkzeug": "3.1.6"
+        }
+      },
+      "modules": [
+        {
+          "module_id": "mod_cdb4ee2aea69",
+          "static_analysis": {
+            "score": 1.0,
+            "findings_count": 0,
+            "findings": []
+          },
+          "runtime_validation": {
+            "score": 1.0,
+            "tests_passed": 15,
+            "tests_total": 15,
+            "evidence": {
+              "stdout": "...............                                                          [100%]\n15 passed in 0.32s\n",
+              "stderr": "",
+              "cmd": [
+                "pytest",
+                "--tb=short",
+                "-q",
+                "-c",
+                "pytest.ini",
+                "tests"
+              ],
+              "timeout_s": 60,
+              "duration_ms": 1277,
+              "cwd": "C:\\Users\\Admin\\AppData\\Local\\Temp\\gate_runner__xn7q4yb",
+              "resolved_project_root": "C:\\Users\\Admin\\AppData\\Local\\Temp\\gate_runner__xn7q4yb"
+            }
+          },
+          "file_count": 9,
+          "descriptor": {
+            "module_id": "mod_cdb4ee2aea69",
+            "root_path": ".",
+            "language": "python",
+            "file_count": 9
+          },
+          "module_g_score": 1.0
+        }
+      ],
+      "aggregation": {
+        "strategy": "weighted_aggregate_with_critical_worstof",
+        "repo_score": 1.0,
+        "repo_verdict": "PASS",
+        "critical_fail": false,
+        "weights": {
+          "static": 0.45,
+          "runtime": 0.55,
+          "file_count_weight": "sqrt"
+        }
+      },
+      "context_gate": {
+        "level": "L3",
+        "allow_pass": true,
+        "missing_context": [],
+        "cap_verdict_to": "PASS",
+        "reason_codes": []
+      },
+      "noise_budget": {
+        "top_n": 12,
+        "min_confidence": 0.7,
+        "deduped": 0,
+        "suppressed_count": 0,
+        "suppression_reasons": []
+      },
+      "reasons": [],
+      "evidence_index": {}
+    },
+    "extract_path": "C:\\Users\\Admin\\AppData\\Local\\Temp\\gate_runner__xn7q4yb",
+    "runtime_evidence": {
+      "stdout": "...............                                                          [100%]\n15 passed in 0.32s\n",
+      "stderr": "",
+      "cmd": [
+        "pytest",
+        "--tb=short",
+        "-q",
+        "-c",
+        "pytest.ini",
+        "tests"
+      ],
+      "timeout_s": 60,
+      "duration_ms": 1277,
+      "cwd": "C:\\Users\\Admin\\AppData\\Local\\Temp\\gate_runner__xn7q4yb",
+      "resolved_project_root": "C:\\Users\\Admin\\AppData\\Local\\Temp\\gate_runner__xn7q4yb"
+    },
+    "m7_replay": {
+      "status": "PASS",
+      "verification": {
+        "replay_verified": true,
+        "determinism_key_first": "0e1a237039d75f40aff59670dd7807e19f6a05c9e258216a85817776ae20758c",
+        "determinism_key_replay": "0e1a237039d75f40aff59670dd7807e19f6a05c9e258216a85817776ae20758c",
+        "reason_code": null,
+        "evidence": {
+          "replay_command": "pytest -q",
+          "replay_exit_code": 0,
+          "replay_duration_ms": 1199,
+          "replay_log_ref": null,
+          "replay_artifacts_hash": "fdda223b145278465f3c51df07f7e83502031c06f373df437e168bfc8b08d10f"
+        }
+      }
+    }
+  },
+  "summary": {
+    "m8_status": "PASS",
+    "stage2_status": "PASS",
+    "modules_checked": 1,
+    "tests_passed": 15,
+    "tests_total": 15
+  }
+}

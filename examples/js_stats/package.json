@@ -1,0 +1,8 @@
+{
+  "name": "js_stats",
+  "version": "1.0.0",
+  "description": "Node example module for the Factory-A gate (multi-language demo)",
+  "scripts": {
+    "test": "node --test"
+  }
+}

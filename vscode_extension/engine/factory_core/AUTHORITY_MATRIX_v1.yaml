@@ -1,0 +1,18 @@
+version: v1.0
+schema_id: AUTHORITY_MATRIX
+roles:
+  vip_policy_gate:
+    allowed: [stamp_only, attach_vip_stamps]
+    forbidden: [halt, block, execute, choose_scenario, veto]
+  brain_router:
+    allowed: [decide_router_action, emit_decision_hash, halt, block, execute, safe_mode, reduce_risk]
+    forbidden: [trade_execution, broker_order_placement]
+  guard:
+    allowed: [approve, terminal_reject]
+    forbidden: [loop_back_to_router, trade_execution, modify_router_decision]
+  executor:
+    allowed: [trade_execution, order_placement, position_management]
+    forbidden: [override_guard_reject, override_router_action_without_policy]
+notes:
+  - "Router is sole issuer of HALT/BLOCK/EXECUTE"
+  - "Guard rejects are terminal"

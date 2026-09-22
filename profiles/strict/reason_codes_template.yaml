@@ -1,0 +1,19 @@
+# Generic reason-codes TEMPLATE (neutral, domain-agnostic).
+# Replace <NS> with your module namespace, e.g. PAYMENTS, AUTH, PARSER.
+# Allowlist only. No free-text.
+version: "1.0"
+namespace: "<NS>"
+codes:
+  - <NS>_INPUT_SCHEMA_INVALID
+  - <NS>_INPUT_MISSING_FIELD
+  - <NS>_INPUT_TYPE_MISMATCH
+  - <NS>_PRECONDITION_FAILED
+  - <NS>_INVARIANT_VIOLATED
+  - <NS>_INTERNAL_ERROR
+severity:
+  <NS>_INPUT_SCHEMA_INVALID: "HARD_FAIL"
+  <NS>_INPUT_MISSING_FIELD: "HARD_FAIL"
+  <NS>_INPUT_TYPE_MISMATCH: "HARD_FAIL"
+  <NS>_PRECONDITION_FAILED: "HARD_FAIL"
+  <NS>_INVARIANT_VIOLATED: "HARD_FAIL"
+  <NS>_INTERNAL_ERROR: "HARD_FAIL"

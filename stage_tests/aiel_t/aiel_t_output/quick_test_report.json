@@ -1,0 +1,143 @@
+{
+  "timestamp": "2026-06-19T09:52:20.592607Z",
+  "config": {
+    "invariants_file": null,
+    "spec_files": []
+  },
+  "invariants": {
+    "invariant_pass_rate": 1.0,
+    "results": {
+      "INV_001_RISK_FACTOR_VALID": "PASS",
+      "INV_002_TRUST_RISK_MONOTONICITY": "PASS"
+    },
+    "passed": 2,
+    "total": 2,
+    "failures": []
+  },
+  "patterns": {
+    "pattern_score": 1.0,
+    "results": {
+      "latency": {
+        "score": 1.0,
+        "status": "PASS"
+      },
+      "monotonicity": {
+        "score": 1.0,
+        "status": "PASS"
+      },
+      "boundary": {
+        "score": 1.0,
+        "status": "PASS"
+      },
+      "failsafe": {
+        "score": 1.0,
+        "status": "PASS"
+      },
+      "stability": {
+        "score": 1.0,
+        "status": "PASS"
+      }
+    },
+    "passed": 5,
+    "total": 5
+  },
+  "contracts": {
+    "contract_score": 1.0,
+    "results": {
+      "risk_factor_scalar": "PASS",
+      "broker_trust_score": "PASS",
+      "veto": "PASS"
+    },
+    "violations": [],
+    "matched": 3,
+    "total": 3
+  },
+  "scenarios": {
+    "scenario_score": 1.0,
+    "results": [
+      {
+        "id": "SC_001",
+        "name": "Low Trust Score",
+        "condition_triggered": false,
+        "status": "N/A"
+      },
+      {
+        "id": "SC_002",
+        "name": "Drawdown Limit Exceeded",
+        "condition_triggered": false,
+        "status": "N/A"
+      },
+      {
+        "id": "SC_003",
+        "name": "Spread Spike",
+        "condition_triggered": false,
+        "status": "N/A"
+      },
+      {
+        "id": "SC_004",
+        "name": "Missing Data Bar",
+        "condition_triggered": false,
+        "status": "N/A"
+      },
+      {
+        "id": "SC_005",
+        "name": "Price Anomaly Detected",
+        "condition_triggered": false,
+        "status": "N/A"
+      },
+      {
+        "id": "SC_006",
+        "name": "Connection Lost",
+        "condition_triggered": false,
+        "status": "N/A"
+      },
+      {
+        "id": "SC_007",
+        "name": "High Volatility Regime",
+        "condition_triggered": false,
+        "status": "N/A"
+      }
+    ],
+    "passed": 0,
+    "total": 0,
+    "triggered": 0,
+    "failures": []
+  },
+  "G_score": 1.0,
+  "status": "DEPLOYABLE",
+  "summary": {
+    "overall_status": "DEPLOYABLE",
+    "g_score": 1.0,
+    "breakdown": {
+      "invariants": {
+        "score": 1.0,
+        "passed": 2,
+        "total": 2,
+        "weight": 0.45
+      },
+      "patterns": {
+        "score": 1.0,
+        "passed": 5,
+        "total": 5,
+        "weight": 0.15
+      },
+      "contracts": {
+        "score": 1.0,
+        "matched": 3,
+        "total": 3,
+        "weight": 0.1
+      },
+      "scenarios": {
+        "score": 1.0,
+        "passed": 0,
+        "triggered": 0,
+        "weight": 0.3
+      }
+    },
+    "total_failures": 0,
+    "failures": [],
+    "recommendations": [
+      "\u2705 All checks passed - System ready for deployment"
+    ]
+  }
+}

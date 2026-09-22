@@ -1,0 +1,21 @@
+version: v1.0
+schema_id: CANONICAL_FIELDS_CORE
+fields:
+  envelope_version: {type: string}
+  message_id: {type: string}
+  determinism_key: {type: string}
+  context_hash_seed: {type: string}
+  evidence_complete: {type: boolean}
+  veto_signal: {type: boolean}
+  noise_residual: {type: array, item_type: number}
+  trust_score: {type: number, range: [0.0, 1.0]}
+  detected_patterns: {type: array, item_type: string}
+  features_12: {type: object}
+  router_action: {type: string, enum: [EXECUTE, HALT, BLOCK, SAFE_MODE, REDUCE_RISK]}
+  decision_hash: {type: string}
+  max_drawdown: {type: number}
+  exposure: {type: number}
+  kill_switch: {type: boolean}
+  trust_critical_state: {type: boolean}
+  hard_broker_safety_limits: {type: boolean}
+  vip_stamps: {type: array, item_type: string}

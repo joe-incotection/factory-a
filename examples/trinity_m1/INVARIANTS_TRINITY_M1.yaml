@@ -1,0 +1,32 @@
+version: '1.0'
+module: TRINITY_M1
+invariants:
+- id: INV_INPUT_BARS_MIN_256
+  rule: len(input.bars) >= 256
+  severity: HARD_FAIL
+- id: INV_OUTPUT_REQUIRED_KEYS
+  rule: output has all required top-level keys per GOLDEN_IO_LOCK_TRINITY_M1.yaml
+  severity: HARD_FAIL
+- id: INV_TRUST_SCORE_RANGE
+  rule: 0 <= output.broker_audit.trust_score <= 1
+  severity: HARD_FAIL
+- id: INV_TRUST_STATE_ENUM
+  rule: output.broker_audit.trust_state in {TRUSTED, WATCH, UNTRUSTED}
+  severity: HARD_FAIL
+- id: INV_EVIDENCE_LOG_MIN_1
+  rule: len(output.broker_audit.evidence_log) >= 1
+  severity: HARD_FAIL
+- id: INV_CANONICAL_JSON
+  rule: canonical_json uses sort_keys=true, float_precision=6, allow_nan=false
+  severity: HARD_FAIL
+- id: INV_NO_WALL_CLOCK
+  rule: core logic must not read wall clock; timestamps only from input bars/meta
+  severity: HARD_FAIL
+- id: INV_SOFT_DEGRADE_FLAG
+  rule: if degraded then output.metadata.audit_quality == DEGRADED and reason_codes
+    include a DEGRADE code
+  severity: SOFT_DEGRADE
+references:
+  golden_io_lock: GOLDEN_IO_LOCK_TRINITY_M1.yaml
+  reason_codes: TRINITY_M1_REASON_CODES.yaml
+  kami_bridge: kami_complete_pythonbrain2026_trinity_m1_bridge.yaml

@@ -1,0 +1,37 @@
+# GOLDEN_IO_LOCK — spider_m / live_quad_gear
+# Generated: 2026-03-27
+# Lock version: 1.0
+
+module_id: spider_m
+version: "1.0"
+
+engine_output_contract:
+  # spider_m.engine.run() — required output keys
+  required_keys:
+    - tension
+    - x0_convergence
+    - x1_load_depth
+    - x2_compression
+    - x3_coherence
+    - atr_ref
+    - tier
+    - lot_scalar
+    - lot_cap_active
+    - tradeable
+
+  tier_values: [SKIP, FLAT, BOOST]
+  tension_range: [0.0, 1.0]
+  component_range: [0.0, 1.0]
+
+live_quad_gear_contract:
+  gears: [HARPOON, SNIPER, STINGER, RAPTOR]
+  harpoon_use_spider: false
+  spider_gears_use_spider: true
+  pair_configs_cable_count: 3
+  lot_output_min: 0.01
+
+scoring_weights:
+  x0_convergence:  0.35
+  x1_load_depth:   0.25
+  x2_compression:  0.20
+  x3_coherence:    0.20

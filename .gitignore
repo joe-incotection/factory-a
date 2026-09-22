@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+env/
+
+# Secrets
+.env
+.env.local
+.env.*.local
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Build artifacts (kept out; release assets ship on GitHub Releases)
+*.vsix.bak
+dist/
+build/
+*.egg-info/
+
+# Generated
+receipts/
+*.log

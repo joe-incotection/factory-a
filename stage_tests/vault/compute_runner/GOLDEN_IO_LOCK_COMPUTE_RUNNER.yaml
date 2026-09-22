@@ -1,0 +1,106 @@
+schema_version: '1.2'
+module_id: compute_runner
+required_top_level_keys:
+- status
+- generated_at_utc
+- input
+- collect_result
+- trinity_m1
+- brain_context
+- reason_codes
+- determinism
+- errors
+allowed_status:
+- success
+- error
+input_schema:
+  required_keys:
+  - symbol
+  - timeframe
+  - end_time_utc
+  - window_bars
+  - market_bars_count
+  optional_keys:
+  - truth_bars_count
+  - budget
+  - vip_config_digest
+collect_result_schema:
+  required_keys:
+  - ok
+  - market_window
+  - collector_meta
+  optional_keys:
+  - truth_window
+  - collector_status
+  - collector_warnings
+  - collector_errors
+trinity_m1_schema:
+  required_keys:
+  - trust_score
+  - noise_residual
+  - broker_audit
+  optional_keys:
+  - cleaned_structure_signal
+  notes:
+  - trust_score MUST exist at top-level (adapter may lift from broker_audit.trust_score).
+brain_context_required_keys:
+- pipeline_status
+- trinity_m1
+- budget
+- pulse_context
+determinism_schema:
+  required_keys:
+  - canonical_input_digest
+  - canonical_output_digest
+errors_schema:
+  type: list
+  item_keys:
+  - code
+  - message
+collector_bar_schema:
+  type: dict
+  required_keys:
+  - t
+  - o
+  - h
+  - l
+  - c
+  - v
+  notes:
+  - Adapter MUST convert Bar objects to this dict format before calling real data_collector.
+trinity_bar_schema:
+  type: dict
+  required_keys:
+  - ts_utc
+  - o
+  - h
+  - l
+  - c
+  - v
+  notes:
+  - Adapter converts collector bars by renaming t -> ts_utc before calling trinity_m1.
+collector_meta_schema:
+  optional_keys:
+  - status
+  - source
+  - aligned
+  - latency_ms
+  - lead_lag_ms
+  allowed_status:
+  - ok
+  - degraded
+  - error
+pulse_context_schema:
+  required_keys:
+  - status
+  - reason_codes
+  optional_keys:
+  - pulse_context
+  - error
+  allowed_status:
+  - OK
+  - SKIP
+  notes:
+  - WS1 telemetry — read-only, no veto, no Lane-2 influence.
+  - status=SKIP when pulse_input missing or WS1 unavailable (fail-soft).
+  - pulse_context sub-dict present only when status=OK.

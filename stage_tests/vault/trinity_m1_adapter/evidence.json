@@ -1,0 +1,11 @@
+{
+  "module_id": "trinity_m1_adapter",
+  "test_result": "PASS",
+  "tests_passed": 7,
+  "tests_total": 7,
+  "tests_failed": 0,
+  "tests_skipped": 0,
+  "timestamp": "2026-03-16T11:47:49.716103Z",
+  "source": "AIEL-T (real pytest execution)",
+  "evidence_type": "SINGLE_MODULE_TEST"
+}

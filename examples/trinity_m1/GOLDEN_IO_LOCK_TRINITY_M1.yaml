@@ -1,0 +1,107 @@
+# GOLDEN_IO_LOCK_TRINITY_M1.yaml
+# Golden I/O Contract for Trinity Module 1 (Collector→Cleaner→Validator features pipeline)
+# v1.0 — LOCKED (schema-as-law)
+
+module:
+  name: "TRINITY_M1"
+  golden_io_version: "1.0"
+
+canonicalization:
+  json:
+    sort_keys: true
+    float_precision_decimals: 6
+    allow_nan: false
+  arrays:
+    preserve_order: true
+
+input_contract:
+  required:
+    - symbol
+    - timeframe
+    - bars
+    - meta
+  fields:
+    symbol: {type: string}
+    timeframe: {type: string, example: "1m"}
+    bars:
+      type: array
+      min_items: 256
+      items:
+        type: object
+        required: [ts_utc, o, h, l, c, v]
+        fields:
+          ts_utc: {type: string, format: iso8601}
+          o: {type: number}
+          h: {type: number}
+          l: {type: number}
+          c: {type: number}
+          v: {type: number}
+    meta:
+      type: object
+      required: [source, run_id]
+      fields:
+        source: {type: string, example: "MT5"}
+        run_id: {type: string}
+
+output_contract:
+  required:
+    - cleaned_structure_signal
+    - noise_residual
+    - spectral_signature
+    - broker_audit
+    - metadata
+  fields:
+    cleaned_structure_signal:
+      type: object
+      required: [cleaned_close, trend_component, cycle_component, kalman_state_last]
+      fields:
+        cleaned_close: {type: array, items: {type: number}}
+        trend_component: {type: array, items: {type: number}}
+        cycle_component: {type: array, items: {type: number}}
+        kalman_state_last: {type: object}
+    noise_residual: {type: object}
+    spectral_signature: {type: object}
+    broker_audit:
+      type: object
+      required: [trust_score, trust_state, deviation_metrics, evidence_features, patterns_detected, evidence_log]
+      fields:
+        trust_score: {type: number, min: 0, max: 1}
+        trust_state: {type: string, enum: ["TRUSTED","WATCH","UNTRUSTED"]}
+        deviation_metrics: {type: object}
+        evidence_features: {type: object}
+        patterns_detected: {type: array, items: {type: string}}
+        evidence_log:
+          type: array
+          min_items: 1
+          items:
+            type: object
+            required: [timestamp_utc, pattern_name, confidence_0_1, evidence_strength, raw_refs]
+            fields:
+              timestamp_utc: {type: string, format: iso8601}
+              pattern_name: {type: string}
+              confidence_0_1: {type: number, min: 0, max: 1}
+              evidence_strength: {type: number, min: 0, max: 1}
+              raw_refs:
+                type: object
+                required: [segment_hash, residual_indices]
+                fields:
+                  segment_hash: {type: string}
+                  residual_indices: {type: array, items: {type: integer}}
+    metadata:
+      type: object
+      required: [processing_time_ms, audit_quality]
+      fields:
+        processing_time_ms: {type: number, min: 0}
+        audit_quality: {type: string, enum: ["NORMAL","DEGRADED"]}
+
+failure_behavior:
+  hard_fail:
+    emit_to_router: false
+    emit_to_eql: false
+    must_log_error: true
+  soft_degrade:
+    emit: true
+    metadata.audit_quality: "DEGRADED"
+
+reason_codes:
+  allowlist_file: "TRINITY_M1_REASON_CODES.yaml"

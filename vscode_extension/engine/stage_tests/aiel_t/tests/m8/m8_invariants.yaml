@@ -1,0 +1,63 @@
+# M8 Historical Logger - AIEL-T Invariants
+# Version: 1.0
+# Purpose: Validate M8 compliance with core data quality rules
+
+INV_M8_001_UTC_TIMESTAMPS:
+  description: All timestamps must be in UTC ISO 8601 format
+  rule: "all timestamps end with 'Z'"
+  severity: CRITICAL
+  category: data_quality
+
+INV_M8_002_NO_TIME_TRAVEL:
+  description: Timestamps must be sequential (no time travel)
+  rule: "timestamps[i] <= timestamps[i+1] for all i"
+  severity: CRITICAL
+  category: data_integrity
+
+INV_M8_003_OHLCV_VALIDITY:
+  description: OHLCV data must satisfy basic relationships
+  rule: "low <= open <= high AND low <= close <= high"
+  severity: CRITICAL
+  category: data_integrity
+
+INV_M8_004_QUALITY_THRESHOLD:
+  description: Quality score must meet minimum threshold
+  rule: "quality_score >= 0.95"
+  severity: CRITICAL
+  category: quality_gate
+
+INV_M8_005_MAX_GAPS:
+  description: Maximum acceptable gaps (market gaps)
+  rule: "gaps_unfilled <= 5"
+  severity: HIGH
+  category: data_completeness
+
+INV_M8_006_ZERO_ANOMALIES:
+  description: No anomalies should be detected with correct threshold
+  rule: "anomalies_flagged == 0"
+  severity: HIGH
+  category: data_quality
+
+INV_M8_007_REQUIRED_FIELDS:
+  description: All required fields must be present
+  rule: "required_fields subset of actual_fields"
+  severity: CRITICAL
+  category: contract_compliance
+
+INV_M8_008_VALIDATED_FLAG:
+  description: All bars must have validated=True
+  rule: "all bars have validated == True"
+  severity: HIGH
+  category: data_integrity
+
+INV_M8_009_SOURCE_CONSISTENCY:
+  description: Primary source should be used when available
+  rule: "if primary_available then bars_from_primary > 0"
+  severity: MEDIUM
+  category: operational
+
+INV_M8_010_SYMBOL_CONSISTENCY:
+  description: Symbol must be consistent across all bars
+  rule: "all bars have same symbol"
+  severity: CRITICAL
+  category: data_integrity

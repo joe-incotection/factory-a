@@ -1,0 +1,152 @@
+🔧 PATCH — M8_REPLAY_GATE_CHECKLIST_v1.2b
+
+(Parameter & Context Governance Extension)
+
+Scope: เพิ่มความสามารถ replay / audit ให้สอดคล้องกับ Factory-A ใหม่
+Principle: Do not trust outputs alone — trust outputs + parameters + context
+
+🔒 Gate C — Decision Receipt (v1.2b)
+
+เดิม (ต้องมี):
+
+decision_id
+
+cycle_id
+
+reason_code (allowlist only)
+
+segment_hash (from Trinity / evidence segment)
+
+เพิ่ม (MANDATORY):
+
+parameters_hash
+
+Hash ของ parameter snapshot ที่ใช้จริง ในรอบนั้น
+
+context_hash
+
+Hash ของ context/environment snapshot (mode, flags, profile)
+
+evidence_set_hash
+
+Hash ของ ชุดหลักฐานทั้งหมด ที่ decision อ้างอิง (ไม่ใช่แค่ segment เดียว)
+
+Gate_C_Decision_Receipt:
+  required_fields:
+    - decision_id
+    - cycle_id
+    - reason_code
+    - segment_hash
+    - parameters_hash        # NEW
+    - context_hash           # NEW
+    - evidence_set_hash      # NEW
+
+
+Hard Rule:
+
+❌ หากขาด field ใด field หนึ่ง → HARD_FAIL_BLOCK
+
+❌ หาก replay แล้ว hash ใดไม่ตรง → HARD_FAIL_BLOCK
+
+❌ ห้าม reason_code เป็น free-text (must be enum)
+
+📦 Output Artifacts (ต่อ 1 cycle)
+
+เดิม (คงไว้):
+
+window_payload.json
+
+trinity_outputs.json
+
+router_output.json
+
+decision_receipt.json
+
+replay_log.json
+
+เพิ่ม (MANDATORY):
+
+param_snapshot.json
+
+Parameter ทั้งหมดที่มีผลต่อ logic (explicit only)
+
+context_snapshot.json
+
+Context/state ที่มีผลต่อ routing/decision
+
+hash_manifest.json
+
+{
+  "segment_hash": "...",
+  "parameters_hash": "...",
+  "context_hash": "...",
+  "evidence_set_hash": "..."
+}
+
+🔁 Replay Requirements (Updated)
+
+Replay จะถือว่า PASS ก็ต่อเมื่อ:
+
+rehash(param_snapshot) == parameters_hash
+
+rehash(context_snapshot) == context_hash
+
+rehash(all_evidence_refs) == evidence_set_hash
+
+rehash(segment_payload) == segment_hash
+
+decision_outcome และ reason_code เหมือนเดิม 100%
+
+หากผลลัพธ์เหมือน แต่ hash ใดไม่ตรง = FAIL (Silent Drift Detected)
+
+🧠 Canonicalization Rules (ใช้ร่วมทุก hash)
+
+JSON canonicalization:
+
+sort_keys = true
+
+fixed float precision (e.g. 6 decimals)
+
+NaN / null → canonical rule เดียวกัน
+
+Exclude:
+
+timestamps ที่ไม่ deterministic
+
+random seeds ที่ไม่ถูก declare
+
+Include:
+
+only declared parameters / context (no implicit state)
+
+🎯 Intent (Why this patch exists)
+
+กัน PASS ปลอม จาก:
+
+parameter drift
+
+context drift
+
+evidence subset mismatch
+
+ทำให้ M7 replay และ Stage2 authority ทำงานต่อได้
+โดยไม่ต้อง “เชื่อ AI”
+
+✅ Compatibility Note
+
+ใช้ได้กับ:
+
+Factory-A ใหม่
+
+PythonBrain EA + Trinity Sensor
+
+Multi-language ในอนาคต (adapter ทำ hash ตามสัญญาเดียวกัน)
+
+ไม่กระทบ AIEL-T เดิม
+
+ไม่รื้อ M8 logic เดิม
+
+🏁 Final Rule (สั้นมาก)
+
+Decision = Output + Parameters + Context + Evidence
+ขาดอย่างใดอย่างหนึ่ง → BLOCK
