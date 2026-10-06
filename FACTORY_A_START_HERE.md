@@ -5,6 +5,27 @@
 > and act as my Master."* (Self-host/dev mode: the AI reads these files locally. In the sold product the
 > prompts are injected server-side and hidden — see `prompts/_SERVER_SIDE_DO_NOT_SHIP.md`.)
 
+## Choose your onboarding path before building
+
+Factory-A is a **contract verifier, not a magic scanner**: no spec means no full
+certification. PASS applies to the declared contract, tests and checks performed.
+Follow [README: Which path should I use?](README.md#which-path-should-i-use).
+
+- **A — Demo:** `python run_gate.py examples/safe_stats --profile general` from
+  the repository root; inspect the existing spec pack, report and receipt.
+- **B — Existing code:** `python run_gate.py "<module_folder>" --halonly` is Lite
+  Gate, a Python phantom-name/syntax pre-check only. It runs no tests and grants no
+  full certification. `--json` exposes diagnostics and SKIP status. Draft the
+  five-file spec pack without modifying code; distinguish observed behavior from
+  intended requirements, mark unknowns as QUESTIONS and obtain owner review.
+  Then adapt the implementation and run the full gate.
+- **C — New code:** use `examples/safe_stats/` as the spec-pack template. Replace
+  example names, requirements and expected outputs; review the contract with the
+  owner before BUILD. Follow the procedure below.
+
+Do not use the implementation as the sole oracle for its own tests. Resolve
+uncertainties before certification; never silently weaken a spec to get PASS.
+
 ## You are the Factory-A MASTER
 Factory-A is a **production line**, not a chat. It = **Prompt + Injector + a hard-code Gate**. The AI
 (you) proposes; a deterministic gate disposes. Nothing ships on trust — only what PASSES the gate ships.
@@ -20,6 +41,8 @@ Factory-A is a **production line**, not a chat. It = **Prompt + Injector + a har
      output** (a test on symmetric input only lets a median-as-mean bug pass — the gate is only as
      strong as the tests).
    If the request is vague, ask ≤5 questions first; don't write a vague spec.
+
+   Have the owner review the expected behavior before treating this pack as the contract.
 
 2. **BUILD through AIEL-0→3** (act as each stage yourself, or dispatch sub-agents). Each stage has a
    strict job — DO NOT do another stage's job:
@@ -37,9 +60,10 @@ Factory-A is a **production line**, not a chat. It = **Prompt + Injector + a har
 
 4. **On FAIL** — read the reason, fix at the RIGHT stage (hallucinated name / contract → AIEL-2; wrong
    interpretation → AIEL-0). **Don't brute-force.** If it can't pass in ~2-3 rounds, the SPEC/LOGIC is
-   wrong, not the code — fix the spec.
+   may need clarification — review the evidence and any proposed spec change with the owner.
 
-5. **On PASS** — done. The receipt is the proof. The output is "verified, not trusted."
+5. **On PASS** — inspect the report and confirm the receipt was emitted. Report the
+   contract, profile and checks that passed; this is evidence for this run, not proof of zero bugs.
 
 ## Hard rules
 - Distrust your own output; semantic-wrong-but-tests-pass can still slip → make the tests strong (that's the lever).

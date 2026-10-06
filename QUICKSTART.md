@@ -2,6 +2,18 @@
 
 Prove Factory-A works end-to-end on a tiny module before you install anything else.
 
+## Which path should I use?
+
+- **A — Try the demo:** follow the commands below.
+- **B — Existing code without a spec pack:** start with
+  `python run_gate.py "<your-module-folder>" --halonly` (Python pre-check only),
+  then draft and owner-review a spec pack before full verification.
+- **C — New code:** adapt the five-file template in `examples/safe_stats/`,
+  review the contract, then build and run the full gate.
+
+Factory-A is a contract verifier, not a magic scanner: **no spec means no full
+certification**. See [the complete onboarding flow](README.md#which-path-should-i-use).
+
 ## Prereq
 - Python 3.10+ on PATH
 - `pip install pytest pyyaml`
@@ -48,7 +60,7 @@ cp path/to/factory-a/FACTORY_A_START_HERE.md .
 ```
 > Read `FACTORY_A_START_HERE.md` and act as my Factory-A Master.
 
-Your AI writes a Golden-I/O spec + golden tests, then builds the module. When it calls `factory_a_run_gate`, you see **PASS** + a receipt, or **FAIL** + the reason it iterates on.
+Choose Path B for existing code or C for new code. Your AI drafts the spec pack and golden tests; you review the expected behavior before it adapts or builds the module. When it calls `factory_a_run_gate`, you see **PASS** + a receipt, or **FAIL** + the reason it iterates on.
 
 ## Multi-module projects (v0.7+)
 

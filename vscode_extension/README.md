@@ -4,19 +4,68 @@
 pass a deterministic gate (no hallucinated names → tests 100% → replay-deterministic) before it
 ships. You see **Verified ✓ / Blocked ✗** + a plain reason; the internal pipeline stays hidden.
 
-## How to use (spec-first)
-Factory-A is a **spec-first production line**, not a linter on arbitrary code. The flow:
-1. **Command Palette → "Factory-A: Add Master Guide to Folder"** — drops `FACTORY_A_START_HERE.md` + a
-   worked example into your folder and copies a one-line instruction to your clipboard.
-2. **Paste it to your AI** (Cursor/Copilot/Claude): *"Read FACTORY_A_START_HERE.md and act as my Master."*
-   Your AI writes the spec (Golden I/O + golden tests) and builds the code.
-3. **Command Palette → "Factory-A: Verify Folder (full gate)"** — gates the module you built →
-   `✓ Verified` or `✗ Blocked` + reason. (The gate needs a Factory-A spec; on a folder without one it
-   tells you to start with the Master Guide.)
+## Which path should I use?
 
-Plus a standalone helper that works on any Python file:
-- **"Check for Hallucinated Names (fast)"** — 0-token static check: red squiggles under any name used but
-  never defined/imported (invented variable / typo'd module / phantom API).
+Factory-A is a **contract verifier, not a magic scanner**. It verifies declared
+contracts and tests with the selected gate profile. **No spec means no full
+certification.** A PASS covers the checks performed; it is not a zero-bug promise.
+
+| Your starting point | Path | First action |
+|---|---|---|
+| I want to try Factory-A | **A — Included demo** | Add the Master Guide and verify the bundled safe_stats example |
+| I already have Python code | **B — Lite Gate, then spec pack** | Run the fast check, then draft and review the expected behavior |
+| I want to build new code | **C — Spec-pack template** | Adapt the bundled example contracts before building |
+
+### A) Run the included demo
+
+Install Python 3.10+ and run `python -m pip install pytest pyyaml`.
+Open a scratch folder in VS Code, then run **Factory-A: Add Master Guide to Folder**
+from the Command Palette. This adds the guide and `factory_a_examples/`.
+Open `factory_a_examples/safe_stats` as the workspace folder in VS Code, then run
+**Factory-A: Verify Folder (full gate)**. Expect Verified/PASS; inspect the report and
+receipt output. Compare the example spec, `.factory-a/` contracts and golden tests.
+
+### B) Check existing code, then generate a spec pack
+
+Run **Factory-A: Check for Hallucinated Names (fast)** on your Python folder and
+review the Problems panel. This is **Lite Gate**: the existing `--halonly` Python
+phantom-name/syntax pre-check. It does not run tests, verify the full contract or
+replay determinism, or issue a certification receipt. A Lite PASS only means no
+offenders were reported; non-Python files are outside its coverage.
+
+Add the Master Guide to a scratch folder to obtain the worked template, then ask
+your AI:
+
+> Read my existing code and FACTORY_A_START_HERE.md. Draft the five-file spec pack
+> using factory_a_examples/safe_stats as the template. Do not change my code yet.
+> Separate observed behavior from intended requirements. Mark uncertainties as
+> QUESTIONS. Propose independently justified expected outputs and wait for my
+> review before treating the draft as the contract.
+
+Review inputs, outputs, edge cases and allowed errors. Resolve QUESTIONS, approve
+the contract, then adapt the code and run **Verify Folder (full gate)**. AI-generated
+specs are drafts; do not copy current implementation outputs blindly into tests.
+
+### C) Build new code from a spec-pack template
+
+Run **Factory-A: Add Master Guide to Folder** in your new workspace. Use
+`factory_a_examples/safe_stats` as a template for `SMART_SPEC_<M>.md`,
+`GOLDEN_IO_LOCK_<M>.yaml`, `<M>_REASON_CODES.yaml`, `INVARIANTS_<M>.yaml` and
+`test_golden_<M>.py`. Keep the contract YAMLs under `.factory-a/` as shown in the
+example, and update the test paths, names, requirements and expected values.
+
+Review the spec and independently justified tests with the owner before building.
+Ask your AI to follow the Master Guide, then run **Verify Folder (full gate)**.
+Use the `general` profile for normal app code or `strict` for pure deterministic
+logic. Inspect the report and receipt; spec changes require owner review.
+
+For CLI users, run these from the standalone Factory-A repository root:
+
+```bash
+python run_gate.py examples/safe_stats --profile general
+python run_gate.py "<your-module-folder>" --halonly
+python run_gate.py "<your-module-folder>" --profile general
+```
 
 ## New in v0.6 — MCP server bundled (any AI client)
 
@@ -42,17 +91,18 @@ It drives the Python engine (`factory_a_pkg`) as a subprocess — your AI does t
   commands work out of the box. (You can still override **Factory-A: Home** to point at your own engine.)
 - Optional settings: **Python Path** + **Profile** (general/strict).
 
-## Build → .vsix → upload (publish)
+## Package and publish
+
+From `vscode_extension/`, run:
+
 ```bash
-cd vscode_extension
-npm install -g @vscode/vsce      # one-time
-vsce package                     # -> Incotection.factory-a-0.1.0.vsix
+npx @vscode/vsce package --no-dependencies
 ```
-Then on the Marketplace publisher page → **New extension → Visual Studio Code → upload the .vsix**.
-(Optional local test first: open this folder in VS Code → press **F5** to launch an Extension Host.)
-`vsce` may warn about a missing icon/repository/LICENSE — those are warnings, it still packages; add an
-icon later for a nicer listing. The packaged `.vsix` contains only the extension + the minimal gate
-engine — **no prompts/, no ODE, no internal jargon** (IP stays out, per `_STEALTH_IP_REGISTER.md`).
+
+The package version is defined in `package.json`; do not rename an old VSIX to
+pretend it is a new release. Test the generated VSIX locally, then upload it as
+an update to publisher `i1980200888`, extension `factory-a`, in Marketplace.
+The bundled engine and MCP server remain included.
 
 ## Inline diagnostics (DONE)
 "Check for Hallucinated Names" now puts **red squiggles** under each phantom name and lists them in the

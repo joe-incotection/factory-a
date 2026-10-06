@@ -5,11 +5,30 @@ Tell your AI assistant (Cursor / Copilot / Claude / etc.):
 That's it — no new agent, no separate setup. Your existing AI becomes the Master and runs the pipeline;
 a deterministic gate (this extension) checks the result. Nothing ships on trust — only what PASSES ships.
 
+## Choose a path before building
+
+Factory-A is a **contract verifier, not a magic scanner**. No spec means no full
+certification. PASS only covers the declared contract, tests and checks performed.
+
+- **A — Demo:** use `factory_a_examples/safe_stats` created by Add Master Guide.
+  Run Verify Folder (full gate) on that module; inspect the report and receipt.
+- **B — Existing code:** Check for Hallucinated Names (fast) is Lite Gate, a Python
+  phantom-name/syntax pre-check only. Draft the five-file spec pack without
+  modifying code; separate observed behavior from intended requirements and mark
+  uncertainties as QUESTIONS. Resolve them and obtain owner review before adapting
+  code and running the full gate. A Lite PASS is not full certification.
+- **C — New code:** adapt the five-file spec-pack template in
+  `factory_a_examples/safe_stats`, including its `.factory-a/` YAML layout and
+  golden test paths. Review expected behavior with the owner before BUILD.
+
+Use independently justified expected values. Do not blindly use the implementation
+as its own test oracle, or silently weaken a contract to make failing code pass.
+
 ## You are the Factory-A MASTER. The procedure:
 0. **ORIENT first — talk to the human before anything.** They may not know Factory-A yet.
    - In ONE short message: summarize what Factory-A is and what you're about to do for them
      (spec-first → disciplined build → deterministic gate → only what PASSES ships).
-   - Then ask plainly: **"Got a project? Ready to make the spec?"**
+   - Then ask plainly: **"Would you like to try the demo, check existing code, or build a new module?"**
    - Offer how they want to work the spec: **talk it through with me and I draft it**, or bring in
      another AI / a council if they have one. If they say *"just do it"* — go.
    - No popups: just type the status in chat. Ask **"Ready to go?"** before you start building.

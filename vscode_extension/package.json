@@ -2,12 +2,25 @@
   "name": "factory-a",
   "displayName": "Factory-A — Verified AI Coding",
   "description": "AI coding that doesn't fall apart at scale. Every change is verified, not trusted: it must pass a deterministic gate (tests + replay + no hallucinated names) before it ships — with a tamper-evident receipt.",
-  "version": "0.6.2",
+  "version": "0.7.1",
   "publisher": "i1980200888",
   "icon": "icon.png",
-  "engines": { "vscode": "^1.85.0" },
-  "categories": ["Linters", "Testing", "Other"],
-  "keywords": ["ai", "verification", "code quality", "hallucination", "gate", "reliability"],
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Linters",
+    "Testing",
+    "Other"
+  ],
+  "keywords": [
+    "ai",
+    "verification",
+    "code quality",
+    "hallucination",
+    "gate",
+    "reliability"
+  ],
   "activationEvents": [],
   "main": "./extension.js",
   "contributes": {
@@ -48,11 +61,19 @@
         },
         "factory-a.profile": {
           "type": "string",
-          "enum": ["general", "strict"],
+          "enum": [
+            "general",
+            "strict"
+          ],
           "default": "general",
           "description": "Verification strictness profile. 'strict' = pure-logic (no network/time/random)."
         }
       }
     }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joe-incotection/factory-a.git",
+    "directory": "vscode_extension"
   }
 }

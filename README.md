@@ -10,6 +10,97 @@ Every change is *verified, not trusted*: it must pass a hard-coded gate (no hall
 
 ---
 
+## Which path should I use?
+
+Factory-A is a **contract verifier, not a magic scanner**. It checks code against
+declared contracts, tests and the selected gate profile. **No spec means no full
+certification.** A PASS is evidence for the checks performed, not a promise of
+zero bugs or proof that the business requirements are correct.
+
+| Your starting point | Choose | What you get |
+|---|---|---|
+| I want to understand Factory-A first | **A — Run the included demo** | A complete example of specs, code, tests and gate evidence |
+| I already have code but no Factory-A spec pack | **B — Lite Gate, then draft a spec pack** | A limited pre-check, then an owner-reviewed contract for full verification |
+| I want to build a new module | **C — Start from a spec-pack template** | Requirements and expected outputs agreed before implementation |
+
+Run the commands below from the Factory-A repository root. The CLI works without
+MCP setup; MCP lets your AI client call the same gate.
+
+### A) Run the included demo
+
+Prerequisite: Python 3.10+ on PATH.
+
+```bash
+python -m pip install pytest pyyaml
+python run_gate.py examples/safe_stats --profile general
+```
+
+Expect a final PASS and a report at `examples/_safe_stats_gate_report.json`.
+Check the receipt message and inspect the generated JSON under
+`examples/safe_stats/receipts/`. Read the example's spec pack alongside its code
+and golden tests to see what the result verifies. See [QUICKSTART.md](QUICKSTART.md).
+
+### B) Check existing code, then generate a spec pack
+
+**Lite Gate** here means the existing `--halonly` pre-check; there is no separate
+`--lite` flag. Point it at your Python module folder:
+
+```bash
+python run_gate.py "<your-module-folder>" --halonly
+python run_gate.py "<your-module-folder>" --halonly --json
+```
+
+This scans Python files for phantom names and syntax diagnostics. It does not run
+tests, check the full contract, verify replay determinism or emit a certification
+receipt. A Lite PASS only means the scanner found no reported offenders; check
+JSON status for SKIP. Non-Python code is outside this pre-check's coverage.
+
+Then give your AI this request:
+
+> Read my existing code and `FACTORY_A_START_HERE.md`. Draft a Factory-A spec pack
+> using `examples/safe_stats/` as the template. Do not modify my code yet. Separate
+> observed behavior from intended requirements; mark uncertain behavior as
+> QUESTIONS. Propose SMART_SPEC, GOLDEN_IO_LOCK, REASON_CODES, INVARIANTS and golden
+> tests. Do not assume the current implementation is correct. Wait for my review
+> of the expected behavior before treating the draft as the contract.
+
+The owner reviews inputs, expected outputs, edge cases and error codes. Resolve
+QUESTIONS and approve the contract, then adapt the code and run the full gate:
+
+```bash
+python run_gate.py "<your-module-folder>" --profile general
+```
+
+Tests need independently justified expected results, not values copied blindly
+from the implementation. AI-generated specs are drafts, not automatic certification.
+
+### C) Build new code the Factory-A way
+
+Use the five files in [examples/safe_stats/](examples/safe_stats/) as a worked
+spec-pack template, guided by [prompts/SPEC_AUTHOR_PROMPT.md](prompts/SPEC_AUTHOR_PROMPT.md).
+Create them in your new module folder, rename SAFE_STATS identifiers for your
+module and replace the example requirements and expected values.
+
+1. Define purpose, public entry point, exact I/O and edge cases in `SMART_SPEC_<M>.md`.
+2. Define schema in `GOLDEN_IO_LOCK_<M>.yaml`, allowed errors in `<M>_REASON_CODES.yaml`
+   and testable laws in `INVARIANTS_<M>.yaml`.
+3. Write `test_golden_<M>.py` with independently justified outputs, including
+   asymmetric/oracle cases for numeric behavior. Have the owner review the contract.
+4. Build through AIEL-0 → 3 using [FACTORY_A_START_HERE.md](FACTORY_A_START_HERE.md),
+   then run the gate:
+
+```bash
+python run_gate.py "<new-module-folder>" --profile general
+# For pure deterministic logic:
+python run_gate.py "<new-module-folder>" --profile strict
+```
+
+Read failures, fix the responsible stage, and rerun. On PASS, inspect the report
+and receipt and describe exactly what was verified. Spec changes require owner
+review; do not weaken the contract merely to make failing code pass.
+
+---
+
 ## Two ways to install
 
 ### A) VS Code / Cursor — one click
@@ -76,7 +167,7 @@ Requirements for the workers: put `DEEPSEEK_API_KEY` and/or `MOONSHOT_API_KEY` i
 
 1. Open your project folder in your AI client.
 2. Ask your AI: *"Read `FACTORY_A_START_HERE.md` and act as my Factory-A Master."*
-3. Your AI writes a Golden-I/O spec + golden tests, then builds the code.
+3. Choose Path A, B or C above. For B/C, review the proposed spec pack and golden tests before the AI builds or adapts code.
 4. Your AI calls `factory_a_run_gate` on the folder. PASS → done + receipt. FAIL → reason → iterate.
 5. When you learn something worth keeping, your AI calls `memory_map_save` — the next session (any vendor) reads it back with `memory_map_pack`.
 
